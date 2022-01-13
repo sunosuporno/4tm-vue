@@ -8,4 +8,13 @@
 body{
     font-family: 'Red Rose', sans-serif;
 }
-
+.router-link-active{
+    color: #9c07ff;
+}
+.header .router-link-active {
+    color: #000000
+    
+}
+li .router-link-active:hover{
+    text-decoration: none;
+}

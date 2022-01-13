@@ -5,6 +5,7 @@ import Canvas from "../views/Canvas.vue";
 import Mint from "../views/Mint.vue";
 import FAQ from "../views/FAQ.vue";
 import GM from "../views/GM.vue";
+import Dashboard from '../views/Dashboard.vue'
 
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
     path: "/gm",
     name: "GM",
     component: GM,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
   },
   { path: "/:path(.*)", component: NotFound },
 ]

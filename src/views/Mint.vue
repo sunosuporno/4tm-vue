@@ -1,85 +1,89 @@
 <template>
   <section
+    v-if="!account"
     className="flex flex-col font-body mt-24 md:mt-36 mb-48 p-16 border-2 border-black rounded-md text-lg text-center w-4/6 md:w-1/2 mx-auto"
   >
     <h1 className="text-2xl md:text-4xl uppercase">Get Innnn!!</h1>
-    <span
-      className="border-2 border-black p-1 text-xl md:text-3xl w-15 md:w-80 rounded-2xl mx-auto mt-24"
-      @click="handleClick"
-      >Connect Metamask</span
+    <button
+      className="border-2 border-black p-1 text-xl md:text-3xl w-15 md:w-80 rounded-2xl mx-auto mt-24 hover:cursor-pointer"
+      @click.prevent="handleClick"
     >
+      Connect Metamask
+    </button>
     <p className="text-red-600 mt-12" v-if="error">{{ error }}</p>
-    <button @click="getChain">Get chain Id</button>
-    
+    <!-- <p className="text-green-400" v-if="getChain()">Great! You are connected now. Taking you somewhere now. </p> -->
   </section>
+  <div v-else>
+    <div class="flex flex-col ml-9 items-center">
+      <p class="text-2xl">Hello {{ account }}! 👋</p>
+      <div class="p-40">
+        <p class="text-xl" style="padding-top: 4rem">Looks like you minted John Cena, but we would like you to mint a $4TM</p>
+      </div>
+      <div class="flex items-center justify-around" style="margin-top: 4rem">
+        <MinusCircleIcon style="width: 30px; margin-right: 5px"/>
+        <span class="text-xl">1</span> 
+        <PlusCircleIcon style="width: 30px; margin-left: 5px"/>
+      </div>
+      <button class="mint">Mint</button>
+    </div>
+  </div>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity';
+import { createToast } from "mosha-vue-toastify";
+import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/vue/solid";
+import "mosha-vue-toastify/dist/style.css";
+import { onMounted, watchEffect } from "@vue/runtime-core";
+import setup from "../composables/setup";
+import { useRouter } from "vue-router";
 export default {
+  components: {
+    PlusCircleIcon, MinusCircleIcon
+  },
   setup() {
-    const Web3 = require("web3");
-    const error = ref('')
- let web3 = ref('')
+    const { getChain, handleInit, error, account, success, net } = setup();
+    const router = useRouter();
+    onMounted(() => {
+      handleInit();
+    });
 
-
-    const handleClick = async () => {
-        error.value = ''
-      if (window.ethereum) {
-        
-        web3 = new Web3(window.ethereum);
-        try{
-        ;
-        console.log("Metamask is connected");
-        
-        console.log(web3);
-        }catch(err){
-            console.log(err.message);
-            err.message = error.value
-        }
-      } else if (window.web3) {
-        web3 = new Web3(window.web3.currentProvider);
-        console.log(web3)
-        console.log("Using web3 detected from external source like Metamask");
-      } else {
-        console.log('Download Metamask');
-      }
-    };
-
-    const connectWallet = async () => {
-      error.value = "";
-      if (typeof window.ethereum !== "undefined") {
-        console.log("MetaMask is installed!");
-        const accounts = await ethereum.request({
-          method: "eth_requestAccounts",
+    const handleClick = () => {
+      getChain();
+      if (success.value) {
+        createToast("Great! You are connected now.", {
+          showCloseButton: true,
+          hideProgressBar: true,
+          timeout: 4000,
+          type: "success",
+          showIcon: true,
         });
-
-        const account = accounts[0];
-        console.log(account);
-        if (account) {
-          web3.eth
-            .getChainId()
-            .then((chainId) => {
-              console.log(chainId);
-              if (chainId !== 80001) {
-                error.value = "Wrong network. Please selct Polygon Mainnet.";
-              }
-            })
-            .catch(() => {
-              error.value = "Some error occured! Please try again.";
-            });
-        }
       }
     };
+    watchEffect(() => {
+      if (net.value !== 80001) {
+        createToast("Please connect to Polygon Network");
+      }
+    });
 
-    const getChain = async () => {
-       const net = await web3.eth.net.getId()
-        if(net !== 80001){
-            error.value = "Wrong network. Please select Polygon Mainnet.";
-        }
-    }
+    setInterval(() => {
+      getChain();
+    }, 1000);
 
-    return { handleClick, error, getChain };
+    // setInterval(() => {
+    //   const address = contract.options.address
+    //   console.log(address)
+    // }, 1000)
+
+
+    return { handleClick, error, getChain, account };
   },
 };
 </script>
+
+<style>
+.mint{
+  border: 3px solid #000;
+  padding: 0.3rem 1rem;
+  border-radius: 3cm;
+}
+</style>
