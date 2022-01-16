@@ -6,6 +6,7 @@ import Mint from "../views/Mint.vue";
 import FAQ from "../views/FAQ.vue";
 import GM from "../views/GM.vue";
 import Dashboard from '../views/Dashboard.vue'
+import FillUp from '../views/FillUp.vue'
 
 
 const routes = [
@@ -34,6 +35,12 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/fillup/:tokenId",
+    name: "FillUp",
+    component: FillUp,
+    props: true
   },
   { path: "/:path(.*)", component: NotFound },
 ]

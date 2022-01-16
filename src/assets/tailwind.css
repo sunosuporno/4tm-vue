@@ -18,3 +18,153 @@ body{
 li .router-link-active:hover{
     text-decoration: none;
 }
+.col_red{
+    background-color: #ff0707;
+}
+.col_aqua{
+    background-color: #00ffff;
+}
+.col_blue{
+    background-color: #0000FF
+}
+.col_green{
+    background-color: #0BBA23;
+}
+.col_yellow{
+    background-color: #ffff00;
+}
+.col_orange{
+    background-color: #ffa500;
+}
+.col_purple{
+    background-color: #800080;
+}
+.col_pink{
+    background-color: #EC17EC;
+}
+.col_brown{
+    background-color: #A52A2A;
+}
+.col_black{
+    background-color: #000000;
+}
+.col_white{
+    background-color: #ffffff;
+}
+.col_gray{
+    background-color: #808080;
+}
+.col_cyan{
+    background-color: #00b7eb;
+}
+.col_magenta{
+    background-color: #8b008b;
+}
+.col_dark_green{
+    background-color: #006400;
+}
+.col_deep_pink{
+    background-color: #ff1493;
+}
+.col_turquoise{
+    background-color: #00ffef;
+}
+.col_fire_brick{
+    background-color: #b22222;
+}
+.col_neon_yellow{
+    background-color: #E6FB04;
+}
+.col_dim_grey{
+    background-color: #696969;
+}
+.col_lavender{
+    background-color: #E6E6FA;
+}
+.col_light_blue{
+    background-color: #4EACDE;
+}
+.col_salmon{
+    background-color: #FA8072;
+}
+.col_polygon_purple{
+    background-color: #8249E4;
+}
+.col_green_yellow{
+    background-color: #adff2f;
+}
+.col_light_pink{
+    background-color: #fdb6ff;
+}
+.col_indigo{
+    background-color: #281e5d;
+}
+.col_crimson{
+    background-color: #DC143C;
+}
+.col_lime{
+    background-color: #32cd32;
+}
+.col_beige{
+    background-color: #f5f5dc;
+}
+.col_sea_green{
+    background-color: #2e8b57;
+}
+.col_teal{
+    background-color: #008080;
+}
+.col_wheat{
+    background-color: #f5deb3;
+}
+.col_fuchsia{
+    background-color: #ff00ff;
+}
+.col_ivory{
+    background-color: #fffff0;
+}
+.col_vermillion{
+    background-color: #E34234;
+}
+.col_coral{
+    background-color: #ff7f50;
+}
+.col_chocolate{
+    background-color: #8a4514;
+}
+.col_azure{
+    background-color: #007fff;
+}
+.col_khaki{
+    background-color: #f0e68c;
+}
+.col_yellow_ochre{
+    background-color: #9b7a01;
+}
+.col_neon_pink{
+    background-color: #ff6ec7;
+}
+.col_navy_blue{
+    background-color: #000080;
+}
+.col_maroon{
+    background-color: #800000;
+}
+.col_spring_green{
+    background-color: #00ff7f;
+}
+.col_caramel{
+    background-color: #D2691E;
+}
+.col_india_green{
+    background-color: #138808;
+}
+.col_ruby{
+    background-color: #E0115F;
+}
+.col_minion_yellow{
+    background-color: #F8DE7E;
+}
+.col_mauve{
+    background-color: #E0B0FF;
+}

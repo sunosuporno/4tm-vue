@@ -16,36 +16,63 @@
   <div v-else>
     <div class="flex flex-col ml-9 items-center">
       <p class="text-2xl">Hello {{ account }}! 👋</p>
-      <div class="p-40">
-        <p class="text-xl" style="padding-top: 4rem">Looks like you minted John Cena, but we would like you to mint a $4TM</p>
+      <div class="p-40" v-if="parseInt(balance) < 4">
+        <p class="text-xl" style="padding-top: 4rem">
+          Looks like you minted John Cena, but we would like you to mint a $4TM
+        </p>
       </div>
-      <div class="flex items-center justify-around" style="margin-top: 4rem">
-        <MinusCircleIcon style="width: 30px; margin-right: 5px"/>
-        <span class="text-xl">1</span> 
-        <PlusCircleIcon style="width: 30px; margin-left: 5px"/>
+      <div v-else class="flex flex-wrap mypixels">
+        <MyPixelsVue />
       </div>
-      <button class="mint">Mint</button>
+      <div v-if="parseInt(balance) < 4">
+        <div class="flex items-center justify-around" style="margin-top: 4rem">
+          <MinusCircleIcon
+            style="width: 30px; margin-right: 5px"
+            @click="decrement"
+          />
+          <span class="text-xl">{{ amount }}</span>
+          <PlusCircleIcon
+            style="width: 30px; margin-left: 5px"
+            @click="increment"
+          />
+        </div>
+        <button class="mint" @click.prevent="mintToken">Mint</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import MyPixelsVue from "../components/MyPixels.vue";
 import { createToast } from "mosha-vue-toastify";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/vue/solid";
 import "mosha-vue-toastify/dist/style.css";
-import { onMounted, watchEffect } from "@vue/runtime-core";
+import { onMounted, ref, watchEffect } from "@vue/runtime-core";
 import setup from "../composables/setup";
-import { useRouter } from "vue-router";
 export default {
   components: {
-    PlusCircleIcon, MinusCircleIcon
+    PlusCircleIcon,
+    MinusCircleIcon,
+    MyPixelsVue
   },
   setup() {
-    const { getChain, handleInit, error, account, success, net } = setup();
-    const router = useRouter();
-    onMounted(() => {
-      handleInit();
-    });
+    const {
+      web3,
+      getChain,
+      error,
+      account,
+      success,
+      net,
+      contract,
+    } = setup();
+
+    
+    const amount = ref(1);
+    let balance;
+
+    // onMounted(() => {
+    //   handleInit();
+    // });
 
     const handleClick = () => {
       getChain();
@@ -69,21 +96,72 @@ export default {
       getChain();
     }, 1000);
 
-    // setInterval(() => {
-    //   const address = contract.options.address
-    //   console.log(address)
-    // }, 1000)
+    setInterval(() => {
+      const accnt = account.value;
+      contract.methods
+        .balanceOf(accnt)
+        .call()
+        .then((res) => {
+          balance = res;
+        });
+    }, 1000);
 
+    const increment = () => {
+      const bal = parseInt(balance);
+      const amt = parseInt(amount.value);
+      if (bal + amt < 4) {
+        amount.value++;
+      }
+    };
 
-    return { handleClick, error, getChain, account };
+    const decrement = () => {
+      if (amount.value > 1) {
+        amount.value--;
+      }
+    };
+
+    const mintToken = () => {
+      const amt = amount.value;
+      const pay = amt * web3.utils.toWei("0.00001", "ether");
+      contract.methods
+        .tokenMint(amt)
+        .send({
+          from: account.value,
+          value: pay,
+        })
+        .then((receipt) => {
+          console.log(receipt);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    return {
+      handleClick,
+      error,
+      getChain,
+      account,
+      amount,
+      increment,
+      decrement,
+      mintToken,
+      balance,
+    };
   },
 };
 </script>
 
 <style>
-.mint{
+.mint {
   border: 3px solid #000;
   padding: 0.3rem 1rem;
   border-radius: 3cm;
+}
+.mypixels{
+  width: 85%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 </style>
