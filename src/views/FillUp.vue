@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .container {
   margin: auto;
   max-width: 85%;
@@ -92,7 +92,7 @@ export default {
 .palette {
   width: 80px;
   height: 80px;
-  border: 5px inset rgb(51, 49, 49);
+  border: 10px double rgb(51, 49, 49);
   border-radius: 0.5cm;
   margin: 1em;
 }

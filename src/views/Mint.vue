@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="!account"
-    className="flex flex-col font-body mt-24 md:mt-36 mb-48 p-16 border-2 border-black rounded-md text-lg text-center w-4/6 md:w-1/2 mx-auto"
+    className="flex flex-col mt-24 md:mt-36 mb-48 p-16 border-2 border-black rounded-md text-lg text-center w-4/6 md:w-1/2 mx-auto"
   >
     <h1 className="text-2xl md:text-4xl uppercase">Get Innnn!!</h1>
     <button
@@ -13,10 +13,11 @@
     <p className="text-red-600 mt-12" v-if="error">{{ error }}</p>
     <!-- <p className="text-green-400" v-if="getChain()">Great! You are connected now. Taking you somewhere now. </p> -->
   </section>
+
   <div v-else>
-    <div class="flex flex-col ml-9 items-center">
+    <div class="flex flex-col ml-9 items-center container">
       <p class="text-2xl">Hello {{ account }}! 👋</p>
-      <div class="p-40" v-if="parseInt(balance) < 4">
+      <div class="p-40" v-if="zeroBalance">
         <p class="text-xl" style="padding-top: 4rem">
           Looks like you minted John Cena, but we would like you to mint a $4TM
         </p>
@@ -24,13 +25,13 @@
       <div v-else class="flex flex-wrap mypixels">
         <MyPixelsVue />
       </div>
-      <div v-if="parseInt(balance) < 4">
-        <div class="flex items-center justify-around" style="margin-top: 4rem">
+      <div v-if="lessThanQuota" class="flex flex-col items-center">
+        <div class="flex items-center justify-evenly" style="margin-top: 4rem">
           <MinusCircleIcon
             style="width: 30px; margin-right: 5px"
             @click="decrement"
           />
-          <span class="text-xl">{{ amount }}</span>
+          <span class="amount text-xl">{{ amount }}</span>
           <PlusCircleIcon
             style="width: 30px; margin-left: 5px"
             @click="increment"
@@ -47,29 +48,21 @@ import MyPixelsVue from "../components/MyPixels.vue";
 import { createToast } from "mosha-vue-toastify";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/vue/solid";
 import "mosha-vue-toastify/dist/style.css";
-import { onMounted, ref, watchEffect } from "@vue/runtime-core";
+import { ref, watchEffect } from "@vue/runtime-core";
 import setup from "../composables/setup";
 export default {
   components: {
     PlusCircleIcon,
     MinusCircleIcon,
-    MyPixelsVue
+    MyPixelsVue,
   },
   setup() {
-    const {
-      web3,
-      getChain,
-      error,
-      account,
-      success,
-      net,
-      contract,
-    } = setup();
+    const { web3, getChain, error, account, success, net, contract } = setup();
 
-    
     const amount = ref(1);
     let balance;
-
+    const zeroBalance = ref(true)
+    const lessThanQuota = ref(false)
     // onMounted(() => {
     //   handleInit();
     // });
@@ -104,6 +97,16 @@ export default {
         .then((res) => {
           balance = res;
         });
+      if(parseInt(balance) === 0){
+        zeroBalance.value = true;
+        lessThanQuota.value = true;
+      }
+      else{
+        zeroBalance.value = false;
+        if(parseInt(balance) < 4){
+          lessThanQuota.value = true;
+        }
+      }
     }, 1000);
 
     const increment = () => {
@@ -147,6 +150,8 @@ export default {
       decrement,
       mintToken,
       balance,
+      zeroBalance,
+      lessThanQuota,
     };
   },
 };
@@ -158,10 +163,13 @@ export default {
   padding: 0.3rem 1rem;
   border-radius: 3cm;
 }
-.mypixels{
+.mypixels {
   width: 85%;
   margin: auto;
   align-items: center;
   justify-content: center;
+}
+.amount{
+  width: 10px;
 }
 </style>

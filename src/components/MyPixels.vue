@@ -2,14 +2,20 @@
   <div v-for="pixel in pixels" :key="pixel.tokenId" class="pixels">
     <div class="flex">
       <p class="tokenId">{{ pixel.tokenId }}</p>
-      <div class="box border-2" :class="pixel.color"></div>
-    </div>
-    <div>message: {{ pixel.message }}</div>
-    <div v-if="pixel.message === ''">
-        <router-link :to="{name: 'FillUp', params: {tokenId: pixel.tokenId}}" class="fill-up">Fill Up</router-link>
-    </div>
-    <div v-else>
-        <button class="filled-up" disabled @click="fillUp">Filled Up</button>
+      <div class="flex flex-col items-center">
+        <div class="box border-2" :class="pixel.color"></div>
+        <div>message: {{ pixel.message }}</div>
+        <div v-if="pixel.message === ''">
+          <router-link
+            :to="{ name: 'FillUp', params: { tokenId: pixel.tokenId } }"
+            class="fill-up"
+            >Fill Up</router-link
+          >
+        </div>
+        <div v-else>
+          <button class="filled-up" disabled @click="fillUp">Filled Up</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -50,12 +56,12 @@ export default {
     setTimeout(pixelation, 1500);
 
     const fillUp = () => {
-        router.push({name: 'FillUp', params: {tokenId: pixel.tokenId}});
-    }
+      router.push({ name: "FillUp", params: { tokenId: pixel.tokenId } });
+    };
 
     return {
       pixels,
-      fillUp
+      fillUp,
     };
   },
 };
@@ -77,16 +83,17 @@ export default {
   font-size: 1.6rem;
   margin-right: 1em;
 }
-.fill-up, .filled-up {
+.fill-up,
+.filled-up {
   margin-top: 10px;
   border: 3px solid #000;
   padding: 0.05rem 0.4rem;
   border-radius: 3cm;
 }
-.filled-up{
-    background-color: #CDCACA;
+.filled-up {
+  background-color: #cdcaca;
 }
-.filled-up:hover{
-    cursor: not-allowed;
+.filled-up:hover {
+  cursor: not-allowed;
 }
 </style>

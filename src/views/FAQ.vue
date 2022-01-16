@@ -6,7 +6,7 @@
                 class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-[#8249E4] rounded-lg hover:bg-purple-800 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
                 >
                 {{ question.question }}
-                <ChevronUpIcon
+                <ChevronDownIcon
                     :class="open ? 'transform rotate-180' : ''"
                     class="w-5 h-5 text-purple-100"
                 />
@@ -23,14 +23,14 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { questions } from "../composables/qna";
 
-import { ChevronUpIcon } from "@heroicons/vue/solid";
+import { ChevronDownIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
-    ChevronUpIcon,
+    ChevronDownIcon,
   },
   setup() {
     return {
