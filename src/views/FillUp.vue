@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="text-2xl">Give your pixel some personality!</div>
-    <form class="form" >
+    <form class="form">
       <span class="text-3xl">{{ token }}</span
       ><br />
       <span class="text-xl">Your message/quote</span><br />
@@ -23,12 +23,19 @@
               name="button"
               :id="color.class"
               value=" "
+              required
             />
           </div>
         </div>
       </div>
+      <p class="error" v-if="error">{{ error }}</p>
       <div class="btn">
-        <button class="submit" @click.prevent="submitFillUp()">Submit</button>
+        <button v-if="!submitting" class="neu" @click.prevent="submitFillUp()">
+          Submit
+        </button>
+        <button v-if="submitting" class="disabled neu" disabled>
+          Submitting....
+        </button>
       </div>
     </form>
   </div>
@@ -46,24 +53,35 @@ export default {
     const token = props.tokenId;
     const message = ref("");
     const colorName = ref("");
-    const {error, sendFilledUp} = fillUpPixel();
+    const { error, sendFilledUp } = fillUpPixel();
+    const submitting = ref(false);
 
     const editValue = (colorClass) => {
       colorName.value = colorClass;
     };
 
     const submitFillUp = async () => {
-      const tkn = token
-      const msg = message.value
-      const clrNm = colorName.value
+      error.value = "";
+      if (message.value === "" || colorName.value === "") {
+        error.value = "Please fill up the pixel fully at one go.";
+        return;
+      }
+      submitting.value = true;
+      const tkn = token;
+      const msg = message.value;
+      const clrNm = colorName.value;
       const res = await sendFilledUp(tkn, msg, clrNm);
       console.log(res);
-      if(!error.value) {
-        router.push({name: 'Mint'})
+      if (!error.value) {
+        router.push({ name: "Mint" });
+        error.value = "";
       }
+      submitting.value = false;
     };
 
     return {
+      submitting,
+      error,
       token,
       colors,
       editValue,
@@ -75,43 +93,49 @@ export default {
 };
 </script>
 
-<style>
-.container {
-  margin: auto;
-  max-width: 85%;
-  margin-bottom: 2em;
-}
+<style scoped>
+
 .form {
   margin-top: 3em;
 }
 .text_input {
   width: 100%;
-  border-bottom: rgb(146, 18, 219) solid 3px;
+  padding: 0.5em;
   margin-bottom: 2em;
+  background-color: #efefef;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.5),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.075),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.15);
+}
+.text_input:focus{
+  outline: none;
 }
 .palette {
   width: 80px;
   height: 80px;
-  border: 10px double rgb(51, 49, 49);
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+    -6px -6px 10px rgba(255, 255, 255, 0.5),
+    6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
   border-radius: 0.5cm;
   margin: 1em;
 }
 .pixel_box {
   margin: 0.5rem;
 }
-.submit {
+
+.disabled {
   text-align: center;
-  margin-top: 2em;
-  color: rgb(8, 8, 8);
-  border: 2px solid black;
-  border-radius: 3rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
+  display: block;
+  margin: 2em auto;
+  margin-right: 2cm;
+  cursor: not-allowed;
+  background-color: #c4c4c4;
 }
-.btn {
-  margin: auto;
-  width: 12%;
+.disabled:hover{
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+    -6px -6px 10px rgba(255, 255, 255, 0.5),
+    6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
 }
 input[type="radio"] {
   appearance: none;
@@ -130,9 +154,14 @@ input[type="radio"]::before {
   border-radius: 2px;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em #8249E4;
+  box-shadow: inset 1em 1em #8249e4;
 }
 input[type="radio"]:checked::before {
   transform: scale(1);
+}
+.btn {
+  width: fit-content;
+  margin: auto;
+  margin-top: 20px;
 }
 </style>

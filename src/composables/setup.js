@@ -7,12 +7,17 @@ let account = ref('')
 let success = ref('')
 const net = ref('')
 
-const contractAddress = '0x29F17366FEb2eB9e1C3Ba8279D5c32BdAe77251b'
+const contractAddress = '0x6763C068Bc9165f611dCaC18f251fcc1cb7C258a'
 
 web3 = new Web3 (Web3.givenProvider)
+
+if(window.ethereum){
 ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
   console.log(accounts)
-})
+
+})} else {
+  error.value = "Please install MetaMask and try again."
+}
 
 // const handleInit = async () => {
 //     error.value = ''
@@ -40,10 +45,12 @@ ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
 //   handleInit()
 // }, 500);
 
-web3.eth.getAccounts().then(console.log)
 
 const getChain = async () => {
   error.value = "";
+  if(!window.ethereum){
+    error.value = "Please install MetaMask and try again."
+  }
    net.value = await web3.eth.net.getId();
     if(net.value !== 80001){
         error.value = "Wrong network. Please select Polygon Mainnet and try to connect again.";

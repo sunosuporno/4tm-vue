@@ -2,9 +2,8 @@ import { ref } from "vue";
 import setup from "./setup";
 
 const {account, contract} = setup()
-
+const error = ref("");
 const fillUpPixel = () => {
-  const error = ref("");
   const sendFilledUp = async (tkn, msg, clr) => {
     try {
       error.value = "";

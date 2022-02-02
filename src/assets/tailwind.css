@@ -1,170 +1,206 @@
-@import url('https://fonts.googleapis.com/css2?family=Red+Rose:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Red+Rose:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-    font-family: 'Red Rose', sans-serif;
+body {
+  font-family: "Red Rose", sans-serif;
+  background-color: #efefef;
 }
-.router-link-active{
-    color: #9c07ff;
+.router-link-active {
+  color: #9c07ff;
 }
 .header .router-link-active {
-    color: #000000
-    
+  color: #000000;
 }
-li .router-link-active:hover{
-    text-decoration: none;
+li .router-link-active:hover {
+  text-decoration: none;
 }
-.col_red{
-    background-color: #ff0707;
+.container {
+    margin: auto;
+    max-width: 85%;
+    margin-bottom: 2em;
+  }
+.error {
+  color: red;
+  text-align: center;
 }
-.col_aqua{
-    background-color: #00ffff;
+.neu {
+  padding: 1.5em 5em;
+  background: #efefef;
+  border: none;
+  border-radius: 0.5rem;
+  color: #444;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+    -6px -6px 10px rgba(255, 255, 255, 0.5),
+    6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
 }
-.col_blue{
-    background-color: #0000FF
+.neu:hover {
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.6),
+    -2px -2px 4px rgba(255, 255, 255, 0.4),
+    2px 2px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
-.col_green{
-    background-color: #0BBA23;
+.neu:active {
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.5),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.075),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
-.col_yellow{
-    background-color: #ffff00;
+.col_red {
+  background-color: #ff0707;
 }
-.col_orange{
-    background-color: #ffa500;
+.col_aqua {
+  background-color: #00ffff;
 }
-.col_purple{
-    background-color: #800080;
+.col_blue {
+  background-color: #0000ff;
 }
-.col_pink{
-    background-color: #EC17EC;
+.col_green {
+  background-color: #0bba23;
 }
-.col_brown{
-    background-color: #A52A2A;
+.col_yellow {
+  background-color: #ffff00;
 }
-.col_black{
-    background-color: #000000;
+.col_orange {
+  background-color: #ffa500;
 }
-.col_white{
-    background-color: #ffffff;
+.col_purple {
+  background-color: #800080;
 }
-.col_gray{
-    background-color: #808080;
+.col_pink {
+  background-color: #ec17ec;
 }
-.col_cyan{
-    background-color: #00b7eb;
+.col_brown {
+  background-color: #a52a2a;
 }
-.col_magenta{
-    background-color: #8b008b;
+.col_black {
+  background-color: #000000;
 }
-.col_dark_green{
-    background-color: #006400;
+.col_white {
+  background-color: #ffffff;
 }
-.col_deep_pink{
-    background-color: #ff1493;
+.col_gray {
+  background-color: #808080;
 }
-.col_turquoise{
-    background-color: #00ffef;
+.col_cyan {
+  background-color: #00b7eb;
 }
-.col_fire_brick{
-    background-color: #b22222;
+.col_magenta {
+  background-color: #8b008b;
 }
-.col_neon_yellow{
-    background-color: #E6FB04;
+.col_dark_green {
+  background-color: #006400;
 }
-.col_dim_grey{
-    background-color: #696969;
+.col_deep_pink {
+  background-color: #ff1493;
 }
-.col_lavender{
-    background-color: #E6E6FA;
+.col_turquoise {
+  background-color: #00ffef;
 }
-.col_light_blue{
-    background-color: #4EACDE;
+.col_fire_brick {
+  background-color: #b22222;
 }
-.col_salmon{
-    background-color: #FA8072;
+.col_neon_yellow {
+  background-color: #e6fb04;
 }
-.col_polygon_purple{
-    background-color: #8249E4;
+.col_dim_grey {
+  background-color: #696969;
 }
-.col_green_yellow{
-    background-color: #adff2f;
+.col_lavender {
+  background-color: #e6e6fa;
 }
-.col_light_pink{
-    background-color: #fdb6ff;
+.col_light_blue {
+  background-color: #4eacde;
 }
-.col_indigo{
-    background-color: #281e5d;
+.col_salmon {
+  background-color: #fa8072;
 }
-.col_crimson{
-    background-color: #DC143C;
+.col_polygon_purple {
+  background-color: #8249e4;
 }
-.col_lime{
-    background-color: #32cd32;
+.col_green_yellow {
+  background-color: #adff2f;
 }
-.col_beige{
-    background-color: #f5f5dc;
+.col_light_pink {
+  background-color: #fdb6ff;
 }
-.col_sea_green{
-    background-color: #2e8b57;
+.col_indigo {
+  background-color: #281e5d;
 }
-.col_teal{
-    background-color: #008080;
+.col_crimson {
+  background-color: #dc143c;
 }
-.col_wheat{
-    background-color: #f5deb3;
+.col_lime {
+  background-color: #32cd32;
 }
-.col_fuchsia{
-    background-color: #ff00ff;
+.col_beige {
+  background-color: #f5f5dc;
 }
-.col_ivory{
-    background-color: #fffff0;
+.col_sea_green {
+  background-color: #2e8b57;
 }
-.col_vermillion{
-    background-color: #E34234;
+.col_teal {
+  background-color: #008080;
 }
-.col_coral{
-    background-color: #ff7f50;
+.col_wheat {
+  background-color: #f5deb3;
 }
-.col_chocolate{
-    background-color: #8a4514;
+.col_fuchsia {
+  background-color: #ff00ff;
 }
-.col_azure{
-    background-color: #007fff;
+.col_ivory {
+  background-color: #fffff0;
 }
-.col_khaki{
-    background-color: #f0e68c;
+.col_vermillion {
+  background-color: #e34234;
 }
-.col_yellow_ochre{
-    background-color: #9b7a01;
+.col_coral {
+  background-color: #ff7f50;
 }
-.col_neon_pink{
-    background-color: #ff6ec7;
+.col_chocolate {
+  background-color: #8a4514;
 }
-.col_navy_blue{
-    background-color: #000080;
+.col_azure {
+  background-color: #007fff;
 }
-.col_maroon{
-    background-color: #800000;
+.col_khaki {
+  background-color: #f0e68c;
 }
-.col_spring_green{
-    background-color: #00ff7f;
+.col_yellow_ochre {
+  background-color: #9b7a01;
 }
-.col_caramel{
-    background-color: #D2691E;
+.col_neon_pink {
+  background-color: #ff6ec7;
 }
-.col_india_green{
-    background-color: #138808;
+.col_navy_blue {
+  background-color: #000080;
 }
-.col_ruby{
-    background-color: #E0115F;
+.col_maroon {
+  background-color: #800000;
 }
-.col_minion_yellow{
-    background-color: #F8DE7E;
+.col_spring_green {
+  background-color: #00ff7f;
 }
-.col_mauve{
-    background-color: #E0B0FF;
+.col_caramel {
+  background-color: #d2691e;
+}
+.col_india_green {
+  background-color: #138808;
+}
+.col_ruby {
+  background-color: #e0115f;
+}
+.col_minion_yellow {
+  background-color: #f8de7e;
+}
+.col_mauve {
+  background-color: #e0b0ff;
 }
