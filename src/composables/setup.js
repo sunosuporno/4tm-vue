@@ -3,57 +3,46 @@ const contractABI = require('../web3/abi.json')
 const Web3 = require("web3");
 const error = ref('')
 let web3
+let contract
 let account = ref('')
 let success = ref('')
 const net = ref('')
+let balance
 
 const contractAddress = '0x6763C068Bc9165f611dCaC18f251fcc1cb7C258a'
 
-web3 = new Web3 (Web3.givenProvider)
+// web3 = new Web3 (Web3.givenProvider)
 
-if(window.ethereum){
-ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
-  console.log(accounts)
 
-})} else {
-  error.value = "Please install MetaMask and try again."
+const init = async () => {
+  error.value = "";
+  if(typeof(window.ethereum) !== 'undefined'){
+    web3 = new Web3(Web3.givenProvider);
+    contract = new web3.eth.Contract(contractABI, contractAddress)
+    return {web3, contract}
+  } else {
+    error.value = "You need to install Metamask or sign into it before proceeding."
+  }
 }
 
-// const handleInit = async () => {
-//     error.value = ''
-//   if (window.ethereum) {
-    
-//     web3 = new Web3(window.ethereum);
-//     try{
-//     console.log("Metamask is connected");
-    
-//     console.log(web3);
-//     }catch(err){
-//         console.log(err.message);
-//         err.message = error.value
-//     }
-//   } else if (window.web3) {
-//     web3 = new Web3(window.web3.currentProvider);
-//     console.log(web3)
-//     console.log("Using web3 detected from external source like Metamask");
-//   } else {
-//     error.value = "No web3 detected. Please install Metamask";
-//   }
-// };
+// if(window.ethereum){
+// ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
+//   console.log(accounts)
 
-// setTimeout(() => {
-//   handleInit()
-// }, 500);
+// })} else {
+//   error.value = "Please install MetaMask and try again."
+// }
 
 
-const getChain = async () => {
+
+const connect = async () => {
   error.value = "";
   if(!window.ethereum){
     error.value = "Please install MetaMask and try again."
   }
    net.value = await web3.eth.net.getId();
     if(net.value !== 80001){
-        error.value = "Wrong network. Please select Polygon Mainnet and try to connect again.";
+        error.value = "Wrong network. Please select Polygon Mainnet and refresh.";
         success.value = false;
     } else {
       try{
@@ -67,14 +56,50 @@ const getChain = async () => {
     }
 }
 
+const checkChain = async () => {
+  error.value = "";
+  try{
+    net.value = await web3.eth.net.getId();
+    if(net.value !== 80001){
+        error.value = "Wrong network. Please select Polygon Mainnet and refresh.";
+    }
+    else{
+      return true
+    }
+  } catch(err){
+    error.value = err.message;
+  }
+}
+
+const checkBalance = async () => {
+  error.value = "";
+  if(await checkChain()){
+    if (!account.value) {
+      error.value = "Can't detect your account. Please refresh/connect MetaMask and try again."
+    } else {
+      const accnt = account.value;
+      contract.methods
+        .balanceOf(accnt)
+        .call()
+        .then((res) => {
+          balance = res;
+        }).catch(()=> {
+          error.value = "Some error occurred in fetching your balance. Please try again." 
+        })
+    }
+  } else{
+    error.value = "Wrong network. Please select Polygon Mainnet and refresh."
+  }
+}
 
 
-const contract = new web3.eth.Contract(contractABI, contractAddress)
+
+
 
 
 const setup = () => {
   return {
-    web3, error, getChain, account, success, net, contract
+    web3, error, init, connect, account, success, net, contract, balance, checkChain, checkBalance
   }
 }
 

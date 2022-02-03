@@ -27,15 +27,16 @@ import setup from "../composables/setup";
 import { useRouter } from "vue-router";
 export default {
   setup() {
-    const { contract, account } = setup();
+    const { contract, account, checkChain } = setup();
     let tokens = []
     let pixels = ref([]);
     let runningPixelation = ref(false);
     let error = ref('')
     const router = useRouter();
 
-    onBeforeMount(() => {
+    onBeforeMount(async() => {
       error.value = ''
+      await checkChain();
       contract.methods
         .getTokensByOwner(account.value)
         .call()
@@ -43,13 +44,14 @@ export default {
           tokens = res;
           console.log(tokens);
         }).catch(() => {
-            error.value = "There was a problem fetching your data. Please sign in again after refreshing.";
+            error.value = "There was a proble fetching your data. Please sign in again after refreshing.";
           });
     });
 
 
-    const pixelation = () => {
+    const pixelation = async () => {
       error.value = ''
+      await checkChain();
       runningPixelation.value = true;
       pixels.value = [];
       tokens.forEach((token) => {

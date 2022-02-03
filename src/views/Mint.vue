@@ -64,10 +64,8 @@ export default {
     MyPixelsVue,
   },
   setup() {
-    const { web3, getChain, error, account, success, net, contract } = setup();
-
+    const { web3, init, connect, error, account, success, net, contract, checkChain, checkBalance, balance } = setup();
     const amount = ref(1);
-    let balance;
     const zeroBalance = ref(false);
     const lessThanQuota = ref(false);
     const pay = ref(0.00001);
@@ -75,13 +73,11 @@ export default {
     //   handleInit();
     // });
     onMounted(() => {
-      if (account.value) {
-        getChain();
-      }
+      init()
     });
 
-    const handleClick = () => {
-      getChain();
+    const handleClick = async () => {
+      await connect();
       if (success.value) {
         createToast("Great! You are connected now.", {
           showCloseButton: true,
@@ -93,38 +89,11 @@ export default {
       }
     };
 
-    watchEffect(() => {
-      setTimeout(() => {
-        if (!account.value) {
-          return;
-        } else {
-          if (net.value !== 80001) {
-            createToast("Please connect to Polygon Network");
-          }
-        }
-      }, 700);
-    });
-
-    setInterval(() => {
+    setInterval(async() => {
       if (!account.value) {
         return;
       } else {
-        getChain();
-        console.log(net.value);
-      }
-    }, 3000);
-
-    setInterval(() => {
-      if (!account.value) {
-        return;
-      } else {
-        const accnt = account.value;
-        contract.methods
-          .balanceOf(accnt)
-          .call()
-          .then((res) => {
-            balance = res;
-          });
+        await checkBalance()
         if (parseInt(balance) === 0) {
           zeroBalance.value = true;
           lessThanQuota.value = true;
@@ -135,7 +104,7 @@ export default {
           }
         }
       }
-    }, 1000);
+    }, 2500);
 
     const increment = () => {
       const bal = parseInt(balance);
@@ -177,7 +146,6 @@ export default {
     return {
       handleClick,
       error,
-      getChain,
       account,
       amount,
       increment,
@@ -187,7 +155,6 @@ export default {
       zeroBalance,
       lessThanQuota,
       pay,
-      error,
     };
   },
 };
