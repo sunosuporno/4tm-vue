@@ -1,10 +1,17 @@
 import { ref } from "vue";
 import setup from "./setup";
 
-const {account, checkChain, contract} = setup()
+const {init, account, checkChain, cntrct} = setup()
 const error = ref("");
 
+console.log(cntrct)
+const contract = cntrct.value;
+console.log(contract)
+
+init()
+
 const fillUpPixel = () => {
+  console.log(contract);
   const sendFilledUp = async (tkn, msg, clr) => {
     try {
       error.value = "";

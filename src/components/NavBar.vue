@@ -26,6 +26,12 @@
     </div> -->
     <nav>
       <ul className="flex flex-col md:flex-row">
+        <li class="mb-6 md:mb-0 md:ml-16">
+          <a href="#"><img src="../assets/twitter.svg" class="twitter" target = "”_blank”" alt="Keep up to date on Twitter!"></a>
+        </li>
+        <li class="mb-6 md:mb-0 md:ml-16">
+          <a href="#"><img src="../assets/discord.svg" class="discord" target = "_blank" alt="Join the party in Discord!"></a>
+        </li>
         <li className="mb-6 md:mb-0 md:ml-16 links" @click="handleClick">
           <router-link :to="{ name: 'Canvas' }">Canvas</router-link>
         </li>
@@ -47,6 +53,7 @@
 import { ref, watch } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import fillUpPixel from "../composables/fillUpPixel";
+
 
 export default {
   setup() {
@@ -90,5 +97,8 @@ export default {
 <style>
 .links:hover {
   color: #8249e4;
+}
+.twitter, .discord{
+  width:30px
 }
 </style>

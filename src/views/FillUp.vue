@@ -43,7 +43,8 @@
 
 <script>
 import { colors } from "../composables/colors";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import setup from "../composables/setup";
 import fillUpPixel from "../composables/fillUpPixel";
 import { useRouter } from "vue-router";
 export default {
@@ -55,10 +56,13 @@ export default {
     const colorName = ref("");
     const { error, sendFilledUp } = fillUpPixel();
     const submitting = ref(false);
+    const {init} = setup()
 
     const editValue = (colorClass) => {
       colorName.value = colorClass;
     };
+
+
 
     const submitFillUp = async () => {
       error.value = "";

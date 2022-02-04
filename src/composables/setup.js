@@ -2,12 +2,12 @@ import { ref } from '@vue/reactivity';
 const contractABI = require('../web3/abi.json')
 const Web3 = require("web3");
 const error = ref('')
-let web3
-let contract
+const wb3 = ref(null)
+const cntrct = ref(null)
 let account = ref('')
 let success = ref('')
 const net = ref('')
-let balance
+const balance = ref('')
 
 const contractAddress = '0x6763C068Bc9165f611dCaC18f251fcc1cb7C258a'
 
@@ -17,9 +17,11 @@ const contractAddress = '0x6763C068Bc9165f611dCaC18f251fcc1cb7C258a'
 const init = async () => {
   error.value = "";
   if(typeof(window.ethereum) !== 'undefined'){
-    web3 = new Web3(Web3.givenProvider);
-    contract = new web3.eth.Contract(contractABI, contractAddress)
-    return {web3, contract}
+    let web3 = new Web3(Web3.givenProvider);
+    console.log(web3);
+    cntrct.value = new web3.eth.Contract(contractABI, contractAddress)
+    wb3.value = web3;
+    return {wb3, cntrct}
   } else {
     error.value = "You need to install Metamask or sign into it before proceeding."
   }
@@ -37,6 +39,7 @@ const init = async () => {
 
 const connect = async () => {
   error.value = "";
+  let web3 = wb3.value
   if(!window.ethereum){
     error.value = "Please install MetaMask and try again."
   }
@@ -57,6 +60,7 @@ const connect = async () => {
 }
 
 const checkChain = async () => {
+  let web3 = wb3.value
   error.value = "";
   try{
     net.value = await web3.eth.net.getId();
@@ -72,9 +76,12 @@ const checkChain = async () => {
 }
 
 const checkBalance = async () => {
+  let web3 = wb3.value
+  let contract = cntrct.value
   error.value = "";
   if(await checkChain()){
     if (!account.value) {
+      console.log('ran checkChain')
       error.value = "Can't detect your account. Please refresh/connect MetaMask and try again."
     } else {
       const accnt = account.value;
@@ -82,7 +89,7 @@ const checkBalance = async () => {
         .balanceOf(accnt)
         .call()
         .then((res) => {
-          balance = res;
+          balance.value = res;
         }).catch(()=> {
           error.value = "Some error occurred in fetching your balance. Please try again." 
         })
@@ -94,12 +101,9 @@ const checkBalance = async () => {
 
 
 
-
-
-
 const setup = () => {
   return {
-    web3, error, init, connect, account, success, net, contract, balance, checkChain, checkBalance
+    wb3, error, init, connect, account, success, net, cntrct, balance, checkChain, checkBalance
   }
 }
 

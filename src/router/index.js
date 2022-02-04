@@ -15,6 +15,7 @@ const routes = [
     path: "/canvas",
     name: "Canvas",
     component: Canvas,
+    meta: { title: "Canvas" },
   },
   {
     path: "/mint",

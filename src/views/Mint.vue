@@ -44,7 +44,11 @@
           <span>Amount for each (in Matic)</span><br />
           <input class="amount-matic" type="number" min="0.00001" placeholder="0.00001" v-model="pay" />
         </form>
-        <button class="neu" @click.prevent="mintToken">Mint</button>
+        <div v-if="error">
+          {{error}}
+        </div>
+        <button class="neu" @click.prevent="mintToken" v-if="!isMinting">Mint</button>
+        <button class="neu minting" v-if="isMinting" disabled>Minting....</button>
       </div>
     </div>
   </div>
@@ -64,8 +68,11 @@ export default {
     MyPixelsVue,
   },
   setup() {
-    const { web3, init, connect, error, account, success, net, contract, checkChain, checkBalance, balance } = setup();
+    const { wb3, init, connect, error, account, success, cntrct, checkBalance, balance } = setup();
+    const isMinting = ref(false);
     const amount = ref(1);
+    const web3 = wb3.value
+    const contract = cntrct.value
     const zeroBalance = ref(false);
     const lessThanQuota = ref(false);
     const pay = ref(0.00001);
@@ -94,20 +101,20 @@ export default {
         return;
       } else {
         await checkBalance()
-        if (parseInt(balance) === 0) {
+        if (parseInt(balance.value) === 0) {
           zeroBalance.value = true;
           lessThanQuota.value = true;
         } else {
           zeroBalance.value = false;
-          if (parseInt(balance) < 10) {
+          if (parseInt(balance.value) < 10) {
             lessThanQuota.value = true;
           }
         }
       }
-    }, 2500);
+    }, 3000);
 
     const increment = () => {
-      const bal = parseInt(balance);
+      const bal = parseInt(balance.value);
       const amt = parseInt(amount.value);
       if (bal + amt < 10) {
         amount.value++;
@@ -127,6 +134,7 @@ export default {
       if (toPay === " ") {
         error.value = "Please enter a valid amount";
       } else {
+        isMinting.value = true;
         console.log(toPay);
         contract.methods
           .tokenMint(amt)
@@ -136,9 +144,18 @@ export default {
           })
           .then((receipt) => {
             console.log(receipt);
+            createToast("Minted 🥳! Refresh now to see changes.", {
+              showCloseButton: true,
+              hideProgressBar: true,
+              timeout: 4000,
+              type: "success",
+              showIcon: true,
+            });
+            isMinting.value = false;
           })
           .catch((err) => {
             err.message = error.value;
+            isMinting.value = false;
           });
       }
     };
@@ -155,6 +172,7 @@ export default {
       zeroBalance,
       lessThanQuota,
       pay,
+      isMinting
     };
   },
 };
@@ -175,6 +193,15 @@ export default {
 }
 .amount {
   width: 10px;
+}
+.minting {
+  background-color: #cdcaca;
+}
+.minting:hover {
+  cursor: not-allowed;
+    box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+    -6px -6px 10px rgba(255, 255, 255, 0.5),
+    6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
 }
 .neu {
   margin-top: 1.5rem;

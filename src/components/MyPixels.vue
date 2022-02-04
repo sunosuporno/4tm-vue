@@ -27,7 +27,8 @@ import setup from "../composables/setup";
 import { useRouter } from "vue-router";
 export default {
   setup() {
-    const { contract, account, checkChain } = setup();
+    const { cntrct, account, checkChain } = setup();
+    const contract = cntrct.value
     let tokens = []
     let pixels = ref([]);
     let runningPixelation = ref(false);
