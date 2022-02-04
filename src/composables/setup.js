@@ -20,6 +20,7 @@ const init = async () => {
     let web3 = new Web3(Web3.givenProvider);
     console.log(web3);
     cntrct.value = new web3.eth.Contract(contractABI, contractAddress)
+    console.log(cntrct.value);
     wb3.value = web3;
     return {wb3, cntrct}
   } else {

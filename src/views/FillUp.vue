@@ -63,6 +63,10 @@ export default {
     };
 
 
+    onMounted(async () => {
+      await init();
+    });
+
 
     const submitFillUp = async () => {
       error.value = "";
