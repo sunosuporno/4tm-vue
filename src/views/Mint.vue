@@ -79,9 +79,9 @@ export default {
     // onMounted(() => {
     //   handleInit();
     // });
-    onMounted(() => {
-      init()
-    });
+    // onMounted(() => {
+    //   init()
+    // });
 
     const handleClick = async () => {
       await connect();

@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import setup from "./setup";
 
-const { init, account, checkChain, cntrct } = setup();
+const { account, checkChain, cntrct } = setup();
 const error = ref("");
 
 let contract;
@@ -10,7 +10,7 @@ setTimeout(() => {
   console.log(cntrct.value);
   contract = cntrct.value;
   console.log(contract);
-}, 1500);
+}, 1000);
 
 const sendFilledUp = async (tkn, msg, clr) => {
   try {
@@ -29,7 +29,6 @@ const sendFilledUp = async (tkn, msg, clr) => {
 };
 
 const fillUpPixel = () => {
-  console.log(contract);
   return {
     error,
     sendFilledUp,

@@ -28,6 +28,7 @@ const init = async () => {
   }
 }
 
+init()
 // if(window.ethereum){
 // ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
 //   console.log(accounts)
