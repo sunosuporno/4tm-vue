@@ -19,7 +19,24 @@ const contract = new web3.eth.Contract(contractABI, contractAddress)
 const getCanvas = async () => {
     const res = await contract.methods.getCanvas().call()
     console.log(res)
-    pixels.value = res
+    let newPixels = [...res]
+    console.log(newPixels);
+    for (let i = 1; i <= 100000; i++) {
+      if (newPixels.find((pixel) => pixel.pixelNum == i)) {
+        continue;
+      } else {
+        newPixels.push({
+          pixelNum: i,
+          color: "col_unknown",
+        });
+      }
+    }
+    newPixels.sort((a, b) => {
+      return a.pixelNum - b.pixelNum;
+    });
+    console.log(newPixels);
+    pixels.value = newPixels
+    
 }
 
 const canvasSetup = () => {
