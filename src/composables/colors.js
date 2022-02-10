@@ -56,8 +56,8 @@ export const colors = [
     },
     {
         id: 12,
-        name: "Gray",
-        class: "col_gray",
+        name: "Peach",
+        class: "col_peach",
     },
     {
         id: 13,
@@ -96,8 +96,8 @@ export const colors = [
     },
     {
         id: 20,
-        name: "Dim Grey",
-        class: "col_dim_grey",
+        name: "Dijon",
+        class: "col_dijon",
     },
     {
         id: 21,

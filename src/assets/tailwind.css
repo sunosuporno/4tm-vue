@@ -87,8 +87,8 @@ li .router-link-active:hover {
 .col_white {
   background-color: #ffffff;
 }
-.col_gray {
-  background-color: #808080;
+.col_peach {
+  background-color: #e6896b;
 }
 .col_cyan {
   background-color: #00b7eb;
@@ -111,8 +111,8 @@ li .router-link-active:hover {
 .col_neon_yellow {
   background-color: #e6fb04;
 }
-.col_dim_grey {
-  background-color: #696969;
+.col_dijon {
+  background-color: #C39203;
 }
 .col_lavender {
   background-color: #e6e6fa;
@@ -203,4 +203,8 @@ li .router-link-active:hover {
 }
 .col_mauve {
   background-color: #e0b0ff;
+}
+.col_unknown{
+  background-color: #8b8b8b;
+  border: 0.5px solid black;
 }
