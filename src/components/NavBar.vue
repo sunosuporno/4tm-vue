@@ -32,16 +32,16 @@
         <li class="mb-6 md:mb-0 md:ml-16">
           <a href="#"><img src="../assets/discord.svg" class="discord" target = "_blank" alt="Join the party in Discord!"></a>
         </li>
-        <li className="mb-6 md:mb-0 md:ml-16 links" @click="handleClick">
+        <li className="mb-6 md:mb-0 md:ml-16 links">
           <router-link :to="{ name: 'Canvas' }">Canvas</router-link>
         </li>
-        <li className="mb-6 md:mb-0 md:ml-16 links" @click="handleClick">
+        <li className="mb-6 md:mb-0 md:ml-16 links">
           <router-link :to="{ name: 'Mint' }">Mint</router-link>
         </li>
-        <li className="mb-6 md:mb-0 md:ml-16 links" @click="handleClick">
+        <li className="mb-6 md:mb-0 md:ml-16 links">
           <router-link :to="{ name: 'FAQ' }">FAQ</router-link>
         </li>
-        <li className="mb-6 md:mb-0 md:ml-16 links" @click="handleClick">
+        <li className="mb-6 md:mb-0 md:ml-16 links">
           <router-link :to="{ name: 'GM' }">GM</router-link>
         </li>
       </ul>
@@ -52,7 +52,6 @@
 <script>
 import { ref, watch } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
-import fillUpPixel from "../composables/fillUpPixel";
 
 
 export default {
@@ -60,13 +59,7 @@ export default {
     const router = useRouter();
     const currentName = ref("");
     // const showNav = ref(false);
-    const { error } = fillUpPixel();
 
-    const handleClick = () => {
-      if (error.value !== "") {
-        error.value = "";
-      }
-    };
 
     watch(
       () => router.currentRoute.value.name,
@@ -87,7 +80,6 @@ export default {
 
     return {
       currentName,
-      handleClick,
       innerWidth,
     };
   },
