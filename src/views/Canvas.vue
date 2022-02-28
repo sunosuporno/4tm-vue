@@ -1,167 +1,73 @@
 <template>
-  <div
-    v-if="isFetchingAllPixels"
-    class="flex flex-col justify-center items-center"
-  >
-    <p class="text-3xl fetch">Fetching all the pixels. Might take a minute</p>
-    <img
-      src="../assets/ready.jpeg"
-      alt="Let's Fucking Go!"
-      type="image/jpeg"
-      class="lfg"
-    />
-  </div>
-  <div v-else>
-    <div class="canvas-container">
-      <div class="flex flex-wrap">
-        <div v-for="pixel in pixels" :key="pixel._id">
-          <div
-            :class="pixel.color"
-            class="canvas_pixel"
-            @click="showAboutPixel(pixel._id)"
-            @mouseenter="showAbout(pixel._id, pixel.color)"
-            @mouseleave="closeIt()"
-          ></div>
-        </div>
-      </div>
-    </div>
-    <div class="about" v-if="show">
-      {{ pixelNum }}
-      <div v-if="isBought">
-        <div class="flex justify-evenly">
-          <p>Pixel Name: {{ onePixel.title }}</p>
-          <p>Message: {{onePixel.message}}</p>
-          <span @click="showAboutPixel(pixel.pixelNum)" class="know-more">
-            Click/Long-click to Know More
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="time">
+  <p>🚀</p>
+    <p>
+     <span>{{ timeLeft }}</span>
+  </p>
+</div>
 </template>
 
 <script>
-import { onMounted, ref } from "@vue/runtime-core";
-import canvasSetup from "../composables/canvasSetup";
-import { useRouter } from "vue-router";
-
+import { ref } from "@vue/reactivity";
 export default {
   setup() {
-    const show = ref(false);
-    const {
-      contract,
-      getCanvas,
-      pixels,
-      isFetchingAllPixels,
-      isSortingAllPixels,
-      isRendering,
-    } = canvasSetup();
+    const timeLeft = ref("");
+    var countDownDate = new Date("Mar 5, 2022 12:00:00").getTime();
 
-    const router = useRouter();
-    const pixelNum = ref("");
-    const onePixel = ref("");
-    const isBought = ref(false);
+    var x = setInterval(function () {
+      var now = new Date().getTime();
 
-    const showAboutPixel = (pixel) => {
-      const forward = router.resolve({
-        name: "AboutPixel",
-        params: {
-          pixelId: pixel,
-        },
-      });
-      window.open(forward.href, "_blank");
-    };
+      var distance = countDownDate - now;
 
-    onMounted(async () => {
-      getCanvas();
-    });
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const showAbout = async (pixelId, color) => {
-      console.log(pixelId);
-      pixelNum.value = pixelId;
-      show.value = true;
+      timeLeft.value =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
-      if (color !== "col_unknown") {
-        const pixel = await contract.methods.pixels(pixelId).call();
-        console.log(pixel)
-        const url = "http://localhost:8080/get"
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ipfsHash: pixel.ifpsHash,
-          }),
-        });
-        const data = await response.json();
-        onePixel.value = {
-          ...pixel,
-          message: data.data.message,
-          title: data.data.title,
-        };
-        isBought.value = true;
+      if (distance < 0) {
+        clearInterval(x);
+        timeLeft.value = "EXPIRED";
       }
-    };
-
-    const closeIt = () => {
-      show.value = false;
-      isBought.value = false;
-    };
+    }, 1000);
 
     return {
-      pixels,
-      showAboutPixel,
-      showAbout,
-      show,
-      pixelNum,
-      closeIt,
-      onePixel,
-      isFetchingAllPixels,
-      isSortingAllPixels,
-      isRendering,
-      isBought,
+      timeLeft,
     };
   },
 };
 </script>
 
-<style>
-.canvas-container {
-  margin: auto;
-  margin-bottom: 4em;
-  width: 1250px;
-}
-.canvas_pixel {
-  width: 5px;
-  height: 5px;
-}
-.canvas_pixel:hover,
-.canvas_pixel:active {
-  cursor: crosshair;
-  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
-    -6px -6px 10px rgba(255, 255, 255, 0.5),
-    6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgb(245, 8, 8);
-}
-.about {
-  position: fixed;
-  background-color: #8249e4;
-  bottom: 0;
-  width: 100%;
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap");
+.time{
+  font-family: "Rajdhani", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  height: fit-content;
-  color: white;
+  font-size: 10rem;
+  font-weight: 600;
+  height: 90vh;
+  width:100vw;
+  
 }
-.lfg {
-  width: 12em;
+span {
+  background: -webkit-linear-gradient(45deg, #d3d023 20%, #bb19ec, #00ff95 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.fetch {
-  text-align: center;
-  margin-top: 7em;
-  margin-bottom: 1em;
+
+@media screen and (max-width: 768px) {
+  .time {
+    font-size: 5rem;
+  }
 }
-.is-ready {
-  margin-top: 10em;
-}
+  
+
 </style>

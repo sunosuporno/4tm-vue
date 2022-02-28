@@ -5,9 +5,6 @@ import Canvas from "../views/Canvas.vue";
 import Mint from "../views/Mint.vue";
 import FAQ from "../views/FAQ.vue";
 import GM from "../views/GM.vue";
-import Dashboard from '../views/Dashboard.vue'
-import FillUp from '../views/FillUp.vue'
-import AboutPixel from '../views/AboutPixel.vue'
 
 
 const routes = [
@@ -33,29 +30,7 @@ const routes = [
     name: "GM",
     component: GM,
   },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-  },
-  {
-    path: "/fillup/:tokenId",
-    name: "FillUp",
-    component: FillUp,
-    props: true
-  },
-  {
-    path: "/aboutpixel/:pixelId",
-    name: "AboutPixel",
-    component: AboutPixel,
-    props: true
-  },
-  {
-    path: "/edit/:tokenId",
-    name: "Edit Pixel",
-    component: FillUp,
-    props: true
-  },
+
   { path: "/:path(.*)", component: NotFound },
 ]
 

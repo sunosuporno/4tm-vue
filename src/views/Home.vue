@@ -15,21 +15,18 @@
     </p>
     <p class="pb-12 text-xl">
       4TheMetaverse is a giant NFT project on Polygon. A digital canvas with
-      100,000 pixels. Every owner of a token will be able to decide the color of
-      the pixel of the same number, a message to go along with it and a link of
-      something they'd like to inroduce the world to.
+      100,000 pixels. Every owner of a token will be able to choose a pixel. Then decide the color of it, a message to go along with it and a link of
+      something they'd like to introduce the world to. Which can be a Spotify Playlist, or the cool project that you've been working on or anything in between!!
     </p>
     <p class="pb-12 text-xl">
-      Imagine the Svalbard Global Seed Vault but for human consciousness, and
+      Imagine the Global Seed Vault but for human consciousness, and
       that's what we want $4TM to be. A sign of how different and diverse we all are
-      and still capable of great things when we work together. 💪
+      and still capable of great things when we come together. 💪
     </p>
     <img src="../assets/canvasdemo.png" class="z-10 w-full" alt="demo canvas" />
     <p class="text-xs pb-12">How we think the canvas is going to look.</p>
     <p class="pb-18 text-xl">
-      Each token will cost ______ (you decide!) to mint. We would be happy for
-      any amount above 1 Matic, as we want NFTs to be accessible to everyone,
-      regardless of their purchasing power. 😇 Also, anyone will be able to buy
+      Each token will cost .... (We are still deciding).⌛️ Anyone will be able to buy
       20 tokens at max.
     </p>
     <h1 class="text-2xl uppercase pt-16 pb-16">Roadmap</h1>
@@ -41,14 +38,10 @@
       />
       <div class="border-2 border-black rounded-md p-8">
         <p>
-          After 100% of the tokens get sold, each pixel’s metadata (only
-          inlcuding the color) will be pinned to IPFS, so that secondary sales
-          can start properly.
+          
         </p>
         <p class="pt-6">
-          A Merch Store will be opened. A community wallet will be made with 50%
-          of the revenue from the mint. And all the proceeds from secondary
-          sales will end up there.
+          A Merch Store will be opened. 70% of profits will always go to a community wallet. A DAO will be established to manage the resource allocation. We are curious to see what decisions the community will make. 
         </p>
       </div>
     </div>
@@ -64,8 +57,7 @@
           launched. Each and every one will be 1/1 and hand-drawn fully with the
           community being able to decide which events need to be depicted. Each
           will cost X.XETH to mint. The physical art piece will be framed and
-          delivered to the buyer. Again, 50% of the profits will go to the
-          community wallet.
+          delivered to the buyer.
         </p>
         <p class="pt-6">
           [Work on Chapter 1: Satoshi will start soon.
@@ -87,13 +79,9 @@
         class="h-6 w-6 mb-6 md:mb-0 md:mr-12"
       />
       <div class="border-2 border-black rounded-md p-8">
-        <p>Then what you ask? A DAO.</p>
+        <p>Then what you ask?</p>
         <p class="pt-6">
-          The $4TM DAO, along with the community wallet will decide the future
-          direction of this project. Buy some land? Fund community’s favourite
-          web3 projects? Spend to increase crypto literacy? Invest in promising
-          NFTs and Cryptocurrencies? Possibilities are endless, as they should
-          be.
+          A Decentralised link-manager. Why? Firstly, we believe both the projects are similar in several aspects and secondly, <a href="https://mashable.com/article/sex-workers-linktree-ban" class="text-[#8249E4]" target="_blank">this.</a> For this project we will launch $4TM ERC-20 token to incentivise early adopters and several other cool stuff we have in mind. And if you hold a $4TM NFT, you will always be getting the best stuff first. 🎊
         </p>
       </div>
     </div>
@@ -101,5 +89,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  setup(){
+    console.log("yo check me out"
+//➖➖⬛⬛⬛⬛⬛
+//➖⬛⬛⬛🏼🏼⬛⬛
+//➖⬛⬛⬛🏼🏼🏼⬛
+//➖⬛🏼🔳🏼🔳🏼⬛
+//➖➖🏼🏼🏼🏼🏼
+//➖➖🏼🏽🏽🏽🏼
+//➖⬜🟦🏼🏼🏼🟦⬜
+//⬜🟦🟦🟦🏽🟦🟦🟦⬜
+//🟦🟦🟦🟦⬜🟦🟦🟦🟦
+    )
+  }
+};
 </script>

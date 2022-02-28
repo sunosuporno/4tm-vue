@@ -6,7 +6,7 @@
         className="h-6 w-6 mr-2"
         alt="logo-web"
       />
-      <router-link :to="{ name: 'Home' }">4TheMetaverse</router-link>
+      <router-link :to="{ name: 'Home' }" class="header">4TheMetaverse</router-link>
     </span>
     <!-- <div v-if="innerWidth.valueOf() < 600" @click="handleNav">
       <svg
@@ -100,5 +100,8 @@ export default {
 }
 .twitter, .discord{
   width:30px
+}
+.header{
+  color: black;
 }
 </style>
