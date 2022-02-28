@@ -27,7 +27,7 @@
     <nav>
       <ul className="flex flex-col md:flex-row">
         <li class="mb-6 md:mb-0 md:ml-16">
-          <a href="#"><img src="../assets/twitter.svg" class="twitter" target = "”_blank”" alt="Keep up to date on Twitter!"></a>
+          <a href="https://twitter.com/4TMNFT"><img src="../assets/twitter.svg" class="twitter" target = "”_blank”" alt="Keep up to date on Twitter!"></a>
         </li>
         <li class="mb-6 md:mb-0 md:ml-16">
           <a href="#"><img src="../assets/discord.svg" class="discord" target = "_blank" alt="Join the party in Discord!"></a>
