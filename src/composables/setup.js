@@ -8,8 +8,9 @@ let account = ref('')
 let success = ref('')
 const net = ref('')
 const balance = ref('')
+const totalTokens = ref('')
 
-const contractAddress = '0x6763C068Bc9165f611dCaC18f251fcc1cb7C258a'
+const contractAddress = '0x00BC27AFFCf94c1389D6d26C4b47365Db7F83acf'
 
 // web3 = new Web3 (Web3.givenProvider)
 
@@ -29,14 +30,6 @@ const init = async () => {
 }
 
 init()
-// if(window.ethereum){
-// ethereum.request({method: 'eth_requestAccounts' }).then(accounts => {
-//   console.log(accounts)
-
-// })} else {
-//   error.value = "Please install MetaMask and try again."
-// }
-
 
 
 const connect = async () => {
@@ -78,7 +71,6 @@ const checkChain = async () => {
 }
 
 const checkBalance = async () => {
-  let web3 = wb3.value
   let contract = cntrct.value
   error.value = "";
   if(await checkChain()){
@@ -101,11 +93,16 @@ const checkBalance = async () => {
   }
 }
 
+const checkSupply = async () => {
+  let contract = cntrct.value
+  totalTokens.value = await contract.methods.totalSupply().call()
+}
+
 
 
 const setup = () => {
   return {
-    wb3, error, init, connect, account, success, net, cntrct, balance, checkChain, checkBalance
+    wb3, error, init, connect, account, success, net, cntrct, balance, checkChain, checkBalance, checkSupply, totalTokens
   }
 }
 

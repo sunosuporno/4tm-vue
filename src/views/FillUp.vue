@@ -4,37 +4,55 @@
     <form class="form">
       <span class="text-3xl">{{ token }}</span
       ><br />
+      <span class="text-xl">Name Your Pixel</span><br />
+      <input
+        class="text_input"
+        type="text"
+        required
+        v-model="title"
+        placeholder="(*ﾟ▽ﾟ*)"
+      />
       <span class="text-xl">Your message/quote</span><br />
       <input
         class="text_input"
         type="text"
         required
         v-model="message"
-        placeholder="Type anything really. A shameless plug, a message for your crush or just lyrics of some banger....make it immortal on the chain!"
+        placeholder="Type anything really. A shameless plug, a message for your crush or just lyrics of a banger....make it immortal on the chain!"
       /><br />
-      <label class="colorpicker text-xl">Choose a color</label><br />
-      <div class="flex flex-wrap items-centre justify-center">
-        <div v-for="color in colors" :key="color.id" class="pixel_box">
-          <div class="flex items-center">
-            <div class="palette" :class="color.class"></div>
-            <input
-              type="radio"
-              @click="editValue(color.class)"
-              name="button"
-              :id="color.class"
-              value=" "
-              required
-            />
+      <div>
+        <label class="colorpicker text-xl">Choose a color</label><br />
+        <div class="flex flex-wrap items-centre justify-center">
+          <div v-for="color in colors" :key="color.id" class="pixel_box">
+            <div class="flex items-center">
+              <div class="palette" :class="color.class"></div>
+              <input
+                type="radio"
+                @click="editValue(color.class)"
+                name="button"
+                :id="color.class"
+                value=" "
+                required
+              />
+            </div>
           </div>
         </div>
       </div>
       <p class="error" v-if="error">{{ error }}</p>
-      <div class="btn">
+      <div class="btn" v-if="!edit">
         <button v-if="!submitting" class="neu" @click.prevent="submitFillUp()">
           Submit
         </button>
         <button v-if="submitting" class="disabled neu" disabled>
           Submitting....
+        </button>
+      </div>
+      <div class="btn" v-if="edit">
+        <button v-if="!submitting" class="neu" @click.prevent="sendEdit()">
+          Edit
+        </button>
+        <button v-if="submitting" class="disabled neu" disabled>
+          Editing....
         </button>
       </div>
     </form>
@@ -48,29 +66,34 @@ import setup from "../composables/setup";
 import fillUpPixel from "../composables/fillUpPixel";
 import { useRouter } from "vue-router";
 export default {
-  props: ["tokenId"],
+  props: ["tokenId", "edit"],
   setup(props) {
     const router = useRouter();
     const token = props.tokenId;
+    const edit = props.edit;
     const message = ref("");
     const colorName = ref("");
-    const { error, sendFilledUp } = fillUpPixel();
+    const { error, sendFilledUp, editPixel } = fillUpPixel();
     const submitting = ref(false);
-    const {init} = setup()
+    const { init } = setup();
+    const title = ref("");
 
     const editValue = (colorClass) => {
       colorName.value = colorClass;
     };
 
-
     onMounted(async () => {
       await init();
+      console.log(edit);
     });
-
 
     const submitFillUp = async () => {
       error.value = "";
-      if (message.value === "" || colorName.value === "") {
+      if (
+        message.value === "" ||
+        colorName.value === "" ||
+        title.value === ""
+      ) {
         error.value = "Please fill up the pixel fully at one go.";
         return;
       }
@@ -78,7 +101,28 @@ export default {
       const tkn = token;
       const msg = message.value;
       const clrNm = colorName.value;
-      const res = await sendFilledUp(tkn, msg, clrNm);
+      const ttl = title.value;
+      const res = await sendFilledUp(tkn, msg, clrNm, ttl);
+      console.log(res);
+      if (!error.value) {
+        router.push({ name: "Mint" });
+        error.value = "";
+      }
+      submitting.value = false;
+    };
+
+    const sendEdit = async () => {
+      error.value = "";
+      if (message.value === "" || title.value === "") {
+        error.value = "Please fill up the pixel fully at one go.";
+        return;
+      }
+      submitting.value = true;
+      const tkn = token;
+      const msg = message.value;
+      const ttl = title.value;
+      const clr = colorName.value;
+      const res = await editPixel(tkn, msg, ttl, clr);
       console.log(res);
       if (!error.value) {
         router.push({ name: "Mint" });
@@ -96,13 +140,15 @@ export default {
       submitFillUp,
       message,
       colorName,
+      edit,
+      title,
+      sendEdit
     };
   },
 };
 </script>
 
 <style scoped>
-
 .form {
   margin-top: 3em;
 }
@@ -116,7 +162,7 @@ export default {
     inset 2px 2px 2px rgba(255, 255, 255, 0.075),
     inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
-.text_input:focus{
+.text_input:focus {
   outline: none;
 }
 .palette {
@@ -140,7 +186,7 @@ export default {
   cursor: not-allowed;
   background-color: #c4c4c4;
 }
-.disabled:hover{
+.disabled:hover {
   box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
     -6px -6px 10px rgba(255, 255, 255, 0.5),
     6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);

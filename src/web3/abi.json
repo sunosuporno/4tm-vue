@@ -95,37 +95,6 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "message",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "color",
-        "type": "string"
-      }
-    ],
-    "name": "pixelFormed",
-    "type": "event"
-  },
-  {
     "inputs": [
       { "internalType": "address", "name": "to", "type": "address" },
       { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
@@ -147,25 +116,25 @@
   {
     "inputs": [],
     "name": "buyLimit",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "canvas",
-    "outputs": [
-      { "internalType": "uint256", "name": "pixelNum", "type": "uint256" },
-      { "internalType": "string", "name": "color", "type": "string" }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint32", "name": "tokenId", "type": "uint32" },
-      { "internalType": "string", "name": "message", "type": "string" },
-      { "internalType": "string", "name": "color", "type": "string" }
+      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "internalType": "uint256", "name": "pixelId", "type": "uint256" },
+      { "internalType": "string", "name": "ipfsHash", "type": "string" }
+    ],
+    "name": "editPixel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "pixelId", "type": "uint256" },
+      { "internalType": "string", "name": "ipfsHash", "type": "string" }
     ],
     "name": "fillUpPixel",
     "outputs": [],
@@ -178,23 +147,6 @@
     ],
     "name": "getApproved",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getCanvas",
-    "outputs": [
-      {
-        "components": [
-          { "internalType": "uint256", "name": "pixelNum", "type": "uint256" },
-          { "internalType": "string", "name": "color", "type": "string" }
-        ],
-        "internalType": "struct Mint4TheMetaverse.canvasPixel[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -230,7 +182,7 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+      { "internalType": "uint256", "name": "pixelId", "type": "uint256" }
     ],
     "name": "lockPixel",
     "outputs": [],
@@ -240,7 +192,7 @@
   {
     "inputs": [],
     "name": "maxSupply",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -279,18 +231,11 @@
     "name": "pixels",
     "outputs": [
       { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "internalType": "uint256", "name": "number", "type": "uint256" },
       { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "string", "name": "message", "type": "string" },
-      { "internalType": "string", "name": "color", "type": "string" },
-      { "internalType": "bool", "name": "isLocked", "type": "bool" }
+      { "internalType": "bool", "name": "isLocked", "type": "bool" },
+      { "internalType": "string", "name": "ifpsHash", "type": "string" }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "price",
-    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -303,7 +248,9 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "quantity", "type": "uint8" }
+      { "internalType": "uint256", "name": "startPoint", "type": "uint256" },
+      { "internalType": "uint256", "name": "endPoint", "type": "uint256" },
+      { "internalType": "string[]", "name": "uris", "type": "string[]" }
     ],
     "name": "reserveToken",
     "outputs": [],
@@ -363,15 +310,6 @@
   },
   {
     "inputs": [
-      { "internalType": "uint64", "name": "newPrice", "type": "uint64" }
-    ],
-    "name": "setPrice",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
     ],
     "name": "supportsInterface",
@@ -404,7 +342,8 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "quantity", "type": "uint8" }
+      { "internalType": "uint256", "name": "pixelNum", "type": "uint256" },
+      { "internalType": "string", "name": "uri", "type": "string" }
     ],
     "name": "tokenMint",
     "outputs": [],
@@ -427,6 +366,16 @@
     ],
     "name": "tokenURI",
     "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "tokens",
+    "outputs": [
+      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "internalType": "uint256", "name": "pixelId", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },

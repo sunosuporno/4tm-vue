@@ -50,6 +50,12 @@ const routes = [
     component: AboutPixel,
     props: true
   },
+  {
+    path: "/edit/:tokenId",
+    name: "Edit Pixel",
+    component: FillUp,
+    props: true
+  },
   { path: "/:path(.*)", component: NotFound },
 ]
 
