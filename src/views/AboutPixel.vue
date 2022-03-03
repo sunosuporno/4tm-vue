@@ -78,7 +78,7 @@ export default {
         if (tempPixel.tokenId == 0) {
           noPixel.value = true;
         } else {
-          const url = "http://localhost:8080/get";
+          const url = "http://api.4themetaverse.xyz/get";
           const response = await fetch(url, {
             method: "POST",
             headers: {

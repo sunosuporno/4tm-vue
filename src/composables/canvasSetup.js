@@ -47,7 +47,7 @@ const getCanvas = async () => {
     // isRendering.value = false
     try{
         isFetchingAllPixels.value = true
-        const url = "http://localhost:8080/getCanvas"
+        const url = "http://api.4themetaverse.xyz/getCanvas"
         const res = await fetch(url)
         const jsonRes = await res.json()
         console.log(jsonRes.data);

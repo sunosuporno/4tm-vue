@@ -67,7 +67,7 @@ export default {
         for (let pixel of pixels) {
           pixelObj = await contract.methods.pixels(pixel.pixelId).call();
           if (pixelObj.ifpsHash !== "") {
-            const url = "http://localhost:8080/get";
+            const url = "http://api.4themetaverse.xyz/get";
             const response = await fetch(url, {
               method: "POST",
               headers: {

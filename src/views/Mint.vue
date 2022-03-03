@@ -141,7 +141,7 @@ export default {
           if (res.number == 0) {
             const res2 = await contract.methods.totalSupply().call();
             nftNum = Number(res2) + 1;
-            const url = "http://localhost:8080/postToken";
+            const url = "http://api.4themetaverse.xyz/postToken";
             const response = await fetch(url, {
               method: "POST",
               headers: {

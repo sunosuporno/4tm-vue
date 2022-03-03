@@ -82,7 +82,7 @@ export default {
       if (color !== "col_unknown") {
         const pixel = await contract.methods.pixels(pixelId).call();
         console.log(pixel)
-        const url = "http://localhost:8080/get"
+        const url = "http://api.4themetaverse.xyz/get"
         const response = await fetch(url, {
           method: "POST",
           headers: {
