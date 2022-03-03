@@ -2,10 +2,10 @@
   "name": "idunno",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
-    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+"scripts": {
+  "serve": "vue-cli-service serve",
+  "build": "vue-cli-service build",
+  "lint": "vue-cli-service lint"
 },
   "dependencies": {
     "@headlessui/vue": "^1.4.2",
