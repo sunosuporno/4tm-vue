@@ -6,9 +6,12 @@
     <div v-else class="pixel-col">
       <div v-for="pixel in pixelCollection" :key="pixel.tokenId" class="pixels">
         <div class="flex flex-col items-center">
-          <p class="tokenId">{{ pixel.tokenId }}</p>
+          <p class="tokenId">NFT #{{ pixel.tokenId }}</p>
+          <p class="tokenId">Pixel No.{{pixel.number}}</p>
           <div class="box" :class="pixel.color"></div>
-          <div class="quote">message: {{ pixel.message }}</div>
+          <div>Name: {{pixel.title}}</div>
+          <div class="quote">Message: {{ pixel.message }}</div>
+          <div class="link">Link: {{ pixel.link }}</div>
           <div v-if="pixel.message === ''">
             <router-link
               :to="{ name: 'FillUp', params: { tokenId: pixel.tokenId } }"
@@ -134,6 +137,7 @@ export default {
   box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
     -6px -6px 10px rgba(255, 255, 255, 0.5),
     6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 10px;
 }
 .pixels {
   margin: 2rem;
@@ -143,7 +147,7 @@ export default {
   justify-content: center;
 }
 .tokenId {
-  font-size: 1.6rem;
+  font-size: 1rem;
   margin-right: 1em;
 }
 .fill-up,
@@ -168,7 +172,6 @@ export default {
 }
 .quote {
   width: 280px;
-  margin: 1.5em;
   text-align: center;
 }
 .pixel-col {
@@ -176,5 +179,10 @@ export default {
   flex-flow: wrap;
   justify-content: space-around;
   align-items: baseline;
+}
+.link{
+  margin-bottom: 1.5em;
+  width: 280px;
+  text-align: center;
 }
 </style>

@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { useLink } from "vue-router";
 import setup from "./setup";
 
 const { account, checkChain, cntrct } = setup();
@@ -12,7 +13,7 @@ setTimeout(() => {
   console.log(contract);
 }, 1000);
 
-const sendFilledUp = async (tkn, msg, clr, ttl) => {
+const sendFilledUp = async (tkn, msg, clr, ttl, lnk) => {
   try {
     error.value = "";
     let ipfsHash
@@ -29,7 +30,8 @@ const sendFilledUp = async (tkn, msg, clr, ttl) => {
             pixelNum: tkn,
             message: msg,
             color: clr,
-            title: ttl
+            title: ttl,
+            link: lnk
           })
         })
 
@@ -50,7 +52,7 @@ const sendFilledUp = async (tkn, msg, clr, ttl) => {
   }
 };
 
-const editPixel = async (tkn, msg, ttl, clr) => {
+const editPixel = async (tkn, msg, ttl, clr, lnk) => {
   try {
     error.value = "";
     let ipfsHash
@@ -77,7 +79,8 @@ const editPixel = async (tkn, msg, ttl, clr) => {
             pixelNum: tkn,
             message: msg,
             color: clr,
-            title: ttl
+            title: ttl,
+            link: lnk
           })
         })
 

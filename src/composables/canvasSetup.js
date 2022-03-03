@@ -45,17 +45,21 @@ const getCanvas = async () => {
     // isRendering.value = true
     // pixels.value = newPixels
     // isRendering.value = false
-
-    const url = "http://localhost:8080/getCanvas"
-    const res = await fetch(url)
-    const jsonRes = await res.json()
-    console.log(jsonRes.data);
-    let newPixels = [...jsonRes.data]
-    newPixels.sort((a, b) => {
-        return a._id - b._id;
-      });
-    pixels.value = newPixels
-
+    try{
+        isFetchingAllPixels.value = true
+        const url = "http://localhost:8080/getCanvas"
+        const res = await fetch(url)
+        const jsonRes = await res.json()
+        console.log(jsonRes.data);
+        let newPixels = [...jsonRes.data]
+        newPixels.sort((a, b) => {
+            return a._id - b._id;
+          });
+        pixels.value = newPixels
+        isFetchingAllPixels.value = false
+    } catch(err){
+        console.log(err);
+    }
 }
 
 const canvasSetup = () => {

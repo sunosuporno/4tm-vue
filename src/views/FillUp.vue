@@ -20,6 +20,14 @@
         v-model="message"
         placeholder="Type anything really. A shameless plug, a message for your crush or just lyrics of a banger....make it immortal on the chain!"
       /><br />
+      <span class="text-xl">Link</span><br />
+      <input
+        class="text_input"
+        type="url"
+        required
+        v-model="link"
+        placeholder="We need the sauce! (source we mean 😅)"
+      /><br />
       <div>
         <label class="colorpicker text-xl">Choose a color</label><br />
         <div class="flex flex-wrap items-centre justify-center">
@@ -73,6 +81,7 @@ export default {
     const edit = props.edit;
     const message = ref("");
     const colorName = ref("");
+    const link = ref("");
     const { error, sendFilledUp, editPixel } = fillUpPixel();
     const submitting = ref(false);
     const { init } = setup();
@@ -102,7 +111,8 @@ export default {
       const msg = message.value;
       const clrNm = colorName.value;
       const ttl = title.value;
-      const res = await sendFilledUp(tkn, msg, clrNm, ttl);
+      const lnk = link.value;
+      const res = await sendFilledUp(tkn, msg, clrNm, ttl, lnk);
       console.log(res);
       if (!error.value) {
         router.push({ name: "Mint" });
@@ -122,7 +132,8 @@ export default {
       const msg = message.value;
       const ttl = title.value;
       const clr = colorName.value;
-      const res = await editPixel(tkn, msg, ttl, clr);
+      const lnk = link.value;
+      const res = await editPixel(tkn, msg, ttl, clr, lnk);
       console.log(res);
       if (!error.value) {
         router.push({ name: "Mint" });
@@ -142,7 +153,8 @@ export default {
       colorName,
       edit,
       title,
-      sendEdit
+      sendEdit,
+      link,
     };
   },
 };

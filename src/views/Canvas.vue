@@ -31,9 +31,7 @@
         <div class="flex justify-evenly">
           <p>Pixel Name: {{ onePixel.title }}</p>
           <p>Message: {{onePixel.message}}</p>
-          <span @click="showAboutPixel(pixel.pixelNum)" class="know-more">
             Click/Long-click to Know More
-          </span>
         </div>
       </div>
     </div>
