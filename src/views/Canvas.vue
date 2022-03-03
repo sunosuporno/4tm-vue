@@ -5,7 +5,7 @@
   >
     <p class="text-3xl fetch">Fetching all the pixels. Might take a minute</p>
     <img
-      src="../assets/ready.jpeg"
+      src="https://gateway.pinata.cloud/ipfs/QmTRWEE5c37uKxcjKFFeTYdApViJmeep9B7FtNas927oUc"
       alt="Let's Fucking Go!"
       type="image/jpeg"
       class="lfg"
