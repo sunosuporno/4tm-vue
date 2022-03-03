@@ -20,7 +20,7 @@ const sendFilledUp = async (tkn, msg, clr, ttl, lnk) => {
     if (await checkChain()) {
       const pixel = await contract.methods.pixels(tkn).call();
       if(account.value.toLowerCase() == pixel.owner.toLowerCase()){
-        const url = "http://api.4themetaverse.xyz/editPixel"
+        const url = "https://api.4themetaverse.xyz/editPixel"
         const response = await fetch(url, {
           method: "POST",
           headers: {
@@ -59,7 +59,7 @@ const editPixel = async (tkn, msg, ttl, clr, lnk) => {
     if (await checkChain()) {
       const pixel = await contract.methods.pixels(tkn).call();
       if(account.value.toLowerCase() == pixel.owner.toLowerCase()){
-        const url1 = "http://api.4themetaverse.xyz/delete"
+        const url1 = "https://api.4themetaverse.xyz/delete"
         const response1 = await fetch(url1, {
           method: "DELETE",
           headers: {
@@ -69,7 +69,7 @@ const editPixel = async (tkn, msg, ttl, clr, lnk) => {
             ipfsHash: pixel.ifpsHash
           })
         })
-        const url = "http://api.4themetaverse.xyz/editPixel"
+        const url = "https://api.4themetaverse.xyz/editPixel"
         const response = await fetch(url, {
           method: "POST",
           headers: {
